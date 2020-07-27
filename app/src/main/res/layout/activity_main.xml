@@ -27,4 +27,16 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp" />
 
+    <ImageView
+        android:id="@+id/btn_clear"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        app:srcCompat="@drawable/ic_close_black_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

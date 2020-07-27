@@ -30,6 +30,11 @@ class MainActivity : AppCompatActivity() {
                 SaveImage()
             }
         }
+
+        btn_clear.setOnClickListener {
+            draw_view.clearCanvas()
+        }
+
     }
 
     override fun onRequestPermissionsResult(
