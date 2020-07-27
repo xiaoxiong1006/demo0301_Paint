@@ -2,12 +2,15 @@ package com.example.demo0301_paint
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.ByteArrayOutputStream
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,7 +25,9 @@ class MainActivity : AppCompatActivity() {
                 // 动态获取权限
                 GetPermission()
             }else{     // 如果已经获取外部设备的写权限
-                Toast.makeText(this,"已经获取存储权限",Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this,"已经获取存储权限",Toast.LENGTH_SHORT).show()
+                // 保存图片
+                SaveImage()
             }
         }
     }
@@ -39,7 +44,9 @@ class MainActivity : AppCompatActivity() {
                     != PackageManager.PERMISSION_GRANTED){
                     Toast.makeText(this,"请打开存储权限",Toast.LENGTH_SHORT).show()
                 }else{
-                    Toast.makeText(this,"已经获取存储权限",Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this,"已经获取存储权限",Toast.LENGTH_SHORT).show()
+                    // 保存图片
+                    SaveImage()
                 }
             }
         }
@@ -67,5 +74,31 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    /**
+     * 保存图片
+     */
+    fun SaveImage()
+    {
+
+        // 获取draw_view的位图
+        val bitmap = draw_view.getBitmap()
+        // 将位图保存为png格式的字节输出流
+        val bStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bStream)
+
+        // 将位图存储到系统相册中
+        var img_uri = MediaStore.Images.Media.insertImage(
+            contentResolver,
+            bitmap!!,
+            "paint_image",
+            "image from Paint")
+
+        if(img_uri != null){
+            Toast.makeText(this, "保存成功，请到相册查看", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
 
 }
